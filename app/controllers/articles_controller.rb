@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    @articles = cache_articles
   end
 
   # GET /articles/1 or /articles/1.json
@@ -66,5 +66,11 @@ class ArticlesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def article_params
       params.require(:article).permit(:title, :body)
+    end
+
+    def cache_articles
+      Rails.cache.fetch("cache_articles", expires_in: 60.minutes) do
+        Article.all.to_a
+      end
     end
 end
