@@ -3,6 +3,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
+    # byebug
     @articles = cache_articles
   end
 
@@ -32,7 +33,7 @@ class ArticlesController < ApplicationController
         format.json { render json: @article.errors, status: :unprocessable_entity }
       end
     end
-    # session[:a]="ほに"
+    session[:a]="redis check"
   end
 
   # PATCH/PUT /articles/1 or /articles/1.json
