@@ -4,6 +4,11 @@ class ArticlesController < ApplicationController
   # GET /articles or /articles.json
   def index
     # byebug
+    if Rails.env.development?
+      logger.debug "デバッグ"
+      logger.info "info"
+      logger.error "エラー"
+    end
     @articles = cache_articles
   end
 
@@ -23,7 +28,7 @@ class ArticlesController < ApplicationController
   # POST /articles or /articles.json
   def create
     @article = Article.new(article_params)
-
+    byebug
     respond_to do |format|
       if @article.save
         format.html { redirect_to article_url(@article), notice: "Article was successfully created." }
